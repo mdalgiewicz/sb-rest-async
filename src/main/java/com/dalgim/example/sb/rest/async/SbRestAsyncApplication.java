@@ -1,0 +1,12 @@
+package com.dalgim.example.sb.rest.async;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SbRestAsyncApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SbRestAsyncApplication.class, args);
+	}
+}
