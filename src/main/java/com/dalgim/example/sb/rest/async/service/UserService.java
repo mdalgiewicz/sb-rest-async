@@ -69,4 +69,8 @@ public class UserService {
             throw new RuntimeException();
         }
     }
+
+    public List<UserDto> getAllException() {
+        throw new RuntimeException("Test exception!");
+    }
 }

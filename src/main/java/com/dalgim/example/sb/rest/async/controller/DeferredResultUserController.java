@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,6 +31,19 @@ public class DeferredResultUserController {
         final DeferredResult<List<UserDto>> deferredResult = new DeferredResult<>();
         CompletableFuture.supplyAsync(userService::getAll)
                 .whenCompleteAsync((userDtos, throwable) -> deferredResult.setResult(userDtos));
+        LOGGER.info("Returns deferred result");
+        return deferredResult;
+    }
+
+    @RequestMapping(value = "/exception", method = RequestMethod.GET)
+    public DeferredResult<List<UserDto>> getAllUsersException() {
+        final DeferredResult<List<UserDto>> deferredResult = new DeferredResult<>();
+        CompletableFuture.supplyAsync(userService::getAllException)
+                .whenCompleteAsync((userDtos, throwable) -> deferredResult.setResult(userDtos))
+                .exceptionally(throwable -> {
+                    System.out.println("Test exception occurred");
+                    return Collections.emptyList();
+                });
         LOGGER.info("Returns deferred result");
         return deferredResult;
     }
